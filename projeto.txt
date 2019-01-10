@@ -2,17 +2,17 @@
 -Admin:
 	.Pode add viaturas eletricas (carros 4 lugares ou carrinhas 6 lugares);
 	.Pode Remover Viaturas (ou colocar omo Inativa)
-	.Pode pesquisar informação de um veiculo em particular
-	.Pode pesquisar sobre todos os veiculos. Pode realizar uma procura simples por nome, marca, matricula, valor faturado acima/abaixo de um nível, numero de serviços efetuados acima/abaixo de um determinado nível
-	.Pode pesquisar clientes inscritos na aplicação
+	.Pode pesquisar informaï¿½ï¿½o de um veiculo em particular
+	.Pode pesquisar sobre todos os veiculos. Pode realizar uma procura simples por nome, marca, matricula, valor faturado acima/abaixo de um nï¿½vel, numero de serviï¿½os efetuados acima/abaixo de um determinado nï¿½vel
+	.Pode pesquisar clientes inscritos na aplicaï¿½ï¿½o
 
 -Cliente
 	.Criar conta unica e entrar com sua password
-	.Pode simular a distancia entre o ponto A(onde está) e o ponto B(Onde quer ir) 
-	.Pode procurar viatura mais proxima para o levar do ponto A ao ponto B. A lista de todos os veículos aparecerá por ordem crescente de distância ao cliente, indicando também o custo da viagem de A para B, a duração da viagem e quanto tempo a viatura demora a chegar até ao ponto A.
-	.-No pedido, o cliente pode indicar o número de passageiros do veículo até um máximo de 6, e caso ultrapasse o limite do carro deverão ser apresentadas apenas carrinhas
-	.Ao procurar aviatura, o cliente poderá ver num gráfico a posição das viaturas e a sua própria posição
-	.Após a listagem, o cliente deve confirmar qual a viatura que deseja, ou cancelar
+	.Pode simular a distancia entre o ponto A(onde estï¿½) e o ponto B(Onde quer ir) 
+	.Pode procurar viatura mais proxima para o levar do ponto A ao ponto B. A lista de todos os veï¿½culos aparecerï¿½ por ordem crescente de distï¿½ncia ao cliente, indicando tambï¿½m o custo da viagem de A para B, a duraï¿½ï¿½o da viagem e quanto tempo a viatura demora a chegar atï¿½ ao ponto A.
+	.-No pedido, o cliente pode indicar o nï¿½mero de passageiros do veï¿½culo atï¿½ um mï¿½ximo de 6, e caso ultrapasse o limite do carro deverï¿½o ser apresentadas apenas carrinhas
+	.Ao procurar aviatura, o cliente poderï¿½ ver num grï¿½fico a posiï¿½ï¿½o das viaturas e a sua prï¿½pria posiï¿½ï¿½o
+	.Apï¿½s a listagem, o cliente deve confirmar qual a viatura que deseja, ou cancelar
 
 Base de dados:
 Viatura (Viatura.txt):
@@ -20,15 +20,15 @@ Viatura (Viatura.txt):
 -Marca/Modelo
 -Matricula
 -Condutor
--Nº de Km
+-Nï¿½ de Km
 -Valor faturado
--Nº de serviços
--Posição
+-Nï¿½ de serviï¿½os
+-Posiï¿½ï¿½o
 
 Cliente(Cliente.txt):
 -ID_Cliente
 -Nome
--Posição
+-Posiï¿½ï¿½o
 
 Registros(Login.txt):
 -ID_Cliente

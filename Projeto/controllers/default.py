@@ -1,5 +1,6 @@
 #Linha de codigo dedicada a realizar a ligação entre os comandos do script "default.py" e a variavel "app" do script "__init__.py" da pasta principal "Projeto"
 from Projeto import app
+from Projeto.models import Login_DB
 from flask import Flask, render_template, request
 lg_done = False
 
@@ -25,6 +26,23 @@ def login():
             return render_template("signIn.html")
         
         if request.form['BT_LOG'] == 'LOGIN':
-            Cliente_User = request.form['Cliente_User']
-            Cliente_Pass = request.form['Cliente_Pass']
-            return render_template("index.html", Cliente_Pass=Cliente_Pass, Cliente_User=Cliente_User)
+            if request.form['Cliente_User'] == "Admin":
+                if request.form['Cliente_Pass'] == "Admin":
+                    return render_template("index.html", Cliente_Pass=request.form['Cliente_User'], Cliente_User=request.form['Cliente_Pass'])
+            
+            else:
+                for linha in Login_DB:
+                    Palavras = linha.split("|")
+                    cont = 0
+                    #for palavra in Palavras:
+                    if Palavras[cont] == "Daniel":
+                        cont += 1
+                        if Palavras[cont] == "y6BE$1aY3NWK":
+                            return render_template("index.html", Cliente_Pass='Funcionou', Cliente_User='Great Job!')
+                        else:
+                            return render_template("index.html", Cliente_Pass='Cliente_Pass', Cliente_User='Cliente_User')
+
+                            
+            #Cliente_User = 
+            #Cliente_Pass = 
+            #
