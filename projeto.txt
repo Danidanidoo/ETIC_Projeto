@@ -1,0 +1,36 @@
+2 users:
+-Admin:
+	.Pode add viaturas eletricas (carros 4 lugares ou carrinhas 6 lugares);
+	.Pode Remover Viaturas (ou colocar omo Inativa)
+	.Pode pesquisar informação de um veiculo em particular
+	.Pode pesquisar sobre todos os veiculos. Pode realizar uma procura simples por nome, marca, matricula, valor faturado acima/abaixo de um nível, numero de serviços efetuados acima/abaixo de um determinado nível
+	.Pode pesquisar clientes inscritos na aplicação
+
+-Cliente
+	.Criar conta unica e entrar com sua password
+	.Pode simular a distancia entre o ponto A(onde está) e o ponto B(Onde quer ir) 
+	.Pode procurar viatura mais proxima para o levar do ponto A ao ponto B. A lista de todos os veículos aparecerá por ordem crescente de distância ao cliente, indicando também o custo da viagem de A para B, a duração da viagem e quanto tempo a viatura demora a chegar até ao ponto A.
+	.-No pedido, o cliente pode indicar o número de passageiros do veículo até um máximo de 6, e caso ultrapasse o limite do carro deverão ser apresentadas apenas carrinhas
+	.Ao procurar aviatura, o cliente poderá ver num gráfico a posição das viaturas e a sua própria posição
+	.Após a listagem, o cliente deve confirmar qual a viatura que deseja, ou cancelar
+
+Base de dados:
+Viatura (Viatura.txt):
+-ID_Viatura
+-Marca/Modelo
+-Matricula
+-Condutor
+-Nº de Km
+-Valor faturado
+-Nº de serviços
+-Posição
+
+Cliente(Cliente.txt):
+-ID_Cliente
+-Nome
+-Posição
+
+Registros(Login.txt):
+-ID_Cliente
+-User
+-Passwords
