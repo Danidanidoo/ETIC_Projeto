@@ -1,8 +1,16 @@
 #Linha de codigo dedicada a realizar a ligação entre os comandos do script "default.py" e a variavel "app" do script "__init__.py" da pasta principal "Projeto"
 from Projeto import app
-from Projeto.models import Login_DB
 from flask import Flask, render_template, request
 lg_done = False
+try:
+    file = open('Login.txt','r+')
+except IOError:
+    file = open('Login.txt','w+')
+
+Login_DB = file.readlines()
+
+file.close()
+
 
 @app.route("/")
 @app.route("/home")
@@ -32,17 +40,26 @@ def login():
             
             else:
                 for linha in Login_DB:
+                
                     Palavras = linha.split("|")
                     cont = 0
-                    #for palavra in Palavras:
-                    if Palavras[cont] == "Daniel":
+                    #Se Palavras[0] (Username), corresponder a algum User da base de dados, então...
+                    if Palavras[cont] == request.form['Cliente_User']:
+                        #Contador +1
                         cont += 1
-                        if Palavras[cont] == "y6BE$1aY3NWK":
+                        #Se Palavras[1], corresponder a alguma Pass da base de dados, então...
+                        if Palavras[cont] == request.form['Cliente_Pass']:
+                            #Faz isto
                             return render_template("index.html", Cliente_Pass='Funcionou', Cliente_User='Great Job!')
+                        #Se Palavras[0](User), for encontrado mas Palavras[1](Pass) não for encontrado na Base de Dados, então...
                         else:
-                            return render_template("index.html", Cliente_Pass='Cliente_Pass', Cliente_User='Cliente_User')
-
-                            
-            #Cliente_User = 
-            #Cliente_Pass = 
-            #
+                            #Faz isto:
+                            return render_template("index.html", Cliente_Pass='Pass errada', Cliente_User='User correto')
+                    #Se Palavras[0] (Username), não for encontrado na Base de Dados, então...
+                    else:
+                        cont += 1
+                        #Se Palavras[1] for encontrado:
+                        if Palavras[cont] == request.form['Cliente_Pass']:
+                            return render_template("index.html", Cliente_Pass='Pass Correta', Cliente_User='User errado')
+                        else:
+                            return render_template("index.html", Cliente_Pass='Pass Errada', Cliente_User='User errado')
