@@ -50,16 +50,20 @@ def login():
                         #Se Palavras[1], corresponder a alguma Pass da base de dados, então...
                         if Palavras[cont] == request.form['Cliente_Pass']:
                             #Faz isto
+                            #global lg_done = True
                             return render_template("index.html", Cliente_Pass='Funcionou', Cliente_User='Great Job!')
                         #Se Palavras[0](User), for encontrado mas Palavras[1](Pass) não for encontrado na Base de Dados, então...
                         else:
                             #Faz isto:
-                            return render_template("index.html", Cliente_Pass='Pass errada', Cliente_User='User correto')
+                            return render_template("login.html", Pass_Errada='A Password Introduzida está incorreta!')
                     #Se Palavras[0] (Username), não for encontrado na Base de Dados, então...
                     else:
                         cont += 1
                         #Se Palavras[1] for encontrado:
                         if Palavras[cont] == request.form['Cliente_Pass']:
-                            return render_template("index.html", Cliente_Pass='Pass Correta', Cliente_User='User errado')
+                            return render_template("login.html", User_Errado='O seu Username não está correto!')
                         else:
-                            return render_template("index.html", Cliente_Pass='Pass Errada', Cliente_User='User errado')
+                            return render_template("login.html", User_Errado='O seu Username não está correto!')
+    
+    #Caso o utilizador digite "endereço/login" sem antes ter passado pela rota principal "/home", então ele será redirecionado para a tela de Login
+    return render_template("login.html")
