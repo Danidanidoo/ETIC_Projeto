@@ -1,4 +1,5 @@
 #Linha de codigo dedicada a realizar a ligação entre os comandos do script "default.py" e a variavel "app" do script "__init__.py" da pasta principal "Projeto"
+import re
 from Projeto import app
 from flask import Flask, render_template, request
 lg_done = False
@@ -30,8 +31,8 @@ def index():
 @app.route("/LOGIN", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if request.form['BT_LOG'] == 'SIGNIN':
-            return render_template("signIn.html")
+        if request.form['BT_LOG'] == 'SIGNUP':
+            return render_template("signup.html")
         
         if request.form['BT_LOG'] == 'LOGIN':
             if request.form['Cliente_User'] == "Admin":
@@ -67,3 +68,24 @@ def login():
     
     #Caso o utilizador digite "endereço/login" sem antes ter passado pela rota principal "/home", então ele será redirecionado para a tela de Login
     return render_template("login.html")
+
+@app.route("/signup", methods=['GET', 'POST'])
+@app.route("/SIGNUP", methods=['GET', 'POST'])
+@app.route("/Signup", methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        if request.form['BT_SIGNUP'] == 'SIGNUP':
+            for linha in Login_DB:
+
+                Palavras = linha.split("|")
+                #Se Palavras[0] (Username), corresponder a algum User da base de dados, então...
+                if Palavras[0] == request.form['Cliente_User']:
+                    return render_template("signup.html", User_Existe='O Username introduzido já existe')
+
+            if request.form['Cliente_Pass1'] != request.form['Cliente_Pass2']:
+                return render_template("signup.html", Pass_Erro='As Password não correspondem')
+    
+            if re.match(r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$])[\w\d@#$]{6,12}$', request.form['Cliente_Pass1']):
+                return ('ok')
+            else:
+                return render_template("signup.html", Pass_Erro='A Password deve ter pelo menos 6 caracteres, pelo menos uma maiuscula, um algarismo e conter pelo menos um caracter especial')
