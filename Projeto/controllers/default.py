@@ -86,6 +86,9 @@ def signup():
                 return render_template("signup.html", Pass_Erro='As Password não correspondem')
     
             if re.match(r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$])[\w\d@#$]{6,12}$', request.form['Cliente_Pass1']):
-                return ('ok')
+                file = open('Login.txt','a')
+                file.write(request.form['Cliente_User']+'|'+request.form['Cliente_Pass1']+'|'+'\n')
+                file.close()
+                return render_template("login.html")
             else:
                 return render_template("signup.html", Pass_Erro='A Password deve ter pelo menos 6 caracteres, pelo menos uma maiuscula, um algarismo e conter pelo menos um caracter especial')
