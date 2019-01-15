@@ -89,6 +89,13 @@ def signup():
                 file = open('Login.txt','a')
                 file.write(request.form['Cliente_User']+'|'+request.form['Cliente_Pass1']+'|'+'\n')
                 file.close()
-                return render_template("login.html")
+                return render_template("Conta_Criada.html")
             else:
                 return render_template("signup.html", Pass_Erro='A Password deve ter pelo menos 6 caracteres, pelo menos uma maiuscula, um algarismo e conter pelo menos um caracter especial')
+
+
+@app.route("/Conta_Criada", methods=['GET', 'POST'])
+def Conta_Criada():
+    if request.method == 'POST':
+        if request.form['BT_SIGNUP'] == 'SIGNUP':
+            return render_template('login.html')
