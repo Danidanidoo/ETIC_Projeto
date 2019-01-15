@@ -1,0 +1,4 @@
+1|Citroen|12-XC-34|Jeff|45000|10€|27|Ativo|2.5|2.5|carro|
+2|Audi|72-TY-57|Wilson|245000|40€|33|Ativo|2.5|2.5|carrinha|
+3|Ferrari|99-MNC-3|Milson|9000|150€|14|Ativo|2.5|2.5|carro|
+4|lamborghini|75-IAP-80|Flinsc|316851|155€|15|Ativo|2.5|2.5|carro|

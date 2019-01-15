@@ -8,18 +8,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <title>Sign Up</title>
+    <title>Admin</title>
   </head>
   <body background="{{ url_for('static', filename='img1.jpg')}}" style="background-size: 100%; ">
       <br><br><br>
       <p style="text-align: center"><img src="https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fclipart-library.com%2Fimages%2FLcdoap7xi.png&f=1" height="120" width="170"></p>
       <br>
-    <h1 style="text-align: center; color: wheat"><b>Sua conta foi Criada com sucesso</b></h1>
-    <br><br>
-    <form class="col-md-5" style="margin: 0 auto" action="/Conta_Criada" method="POST">
-        <button type="submit" name="BT_SIGNUP" class="btn btn-primary btn-lg btn-block border-0 rounded-0" style="background-color: red" value="SIGNUP">Voltar para a tela de Login</button>
-    </form> 
-       
+      
+    <h1 style="text-align: center; color: wheat"><b>O Seu User é: {{ Cliente_User }}</b></h1>
+       <h1 style="text-align: center; color: wheat"><b>A Sua pass é: {{ Cliente_Pass }}</b></h1>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
