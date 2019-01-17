@@ -1,7 +1,7 @@
 #Linha de codigo dedicada a realizar a ligação entre os comandos do script "default.py" e a variavel "app" do script "__init__.py" da pasta principal "Projeto"
 import re
 from Projeto import app
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Markup, flash
 lg_done = False
 try:
     file = open('Login.txt','r+')
@@ -57,14 +57,16 @@ def login():
                         else:
                             #Faz isto:
                             return render_template("login.html", Pass_Errada='A Password Introduzida está incorreta!')
+                for linha in Login_DB:
+                    Palavras = linha.split("|")
+                    cont = 0
                     #Se Palavras[0] (Username), não for encontrado na Base de Dados, então...
+                    cont += 1
+                    #Se Palavras[1] for encontrado:
+                    if Palavras[cont] == request.form['Cliente_Pass']:
+                       return render_template("login.html", User_Errado='O seu Username não está correto!')
                     else:
-                        cont += 1
-                        #Se Palavras[1] for encontrado:
-                        if Palavras[cont] == request.form['Cliente_Pass']:
-                            return render_template("login.html", User_Errado='O seu Username não está correto!')
-                        else:
-                            return render_template("login.html", User_Errado='O seu Username não está correto!')
+                        return render_template("login.html", User_Errado='O seu Username não está correto!')
     
     #Caso o utilizador digite "endereço/login" sem antes ter passado pela rota principal "/home", então ele será redirecionado para a tela de Login
     return render_template("login.html")
@@ -105,7 +107,11 @@ def Conta_Criada():
 
 @app.route("/Admin", methods=['GET', 'POST'])
 def Admin():
+    
+
     if request.method == 'POST':
+        message = Markup("<h1>Voila! Platform is ready to used</h1>")
+        flash(message)
         if request.form['BT_VEICULO'] == 'ADICIONAR':
             return render_template('Add_Veiculo.html')
         

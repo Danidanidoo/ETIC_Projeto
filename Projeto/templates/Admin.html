@@ -57,6 +57,7 @@
     <title>Admin</title>
   </head>
   <body background="{{ url_for('static', filename='img1.jpg')}}" style="background-size: 100%; ">
+      
       <br>
       <br>
       <section>
@@ -64,6 +65,11 @@
             <div class = "row">
               <div class="col-md-12" style="background-color:rgba(32, 32, 32, 0.9)">
                 <h1 style="text-align: center; color: wheat"><b>Bem Vindo {{ Cliente_User }}</b></h1>
+                <div class="flashes" style="color: white">
+                    {% for message in get_flashed_messages() %}
+                      {{ message }}
+                    {% endfor %}
+                  </div>
                 <div class="col-md-4">
                     <label style="color: wheat">Viaturas</lae> <input type="radio" name="rad1" onclick="Painel1(0); Painel2(1)" checked> 
                 </div>
