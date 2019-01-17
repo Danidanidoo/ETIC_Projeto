@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-pt">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="icon" href="https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fclipart-library.com%2Fimages%2FLcdoap7xi.png&f=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Adicionar Veiculo</title>
+  </head>
+  <body background="{{ url_for('static', filename='img1.jpg')}}" style="background-size: 100%; ">
+      <br><br><br>
+      <p style="text-align: center"><img src="https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fclipart-library.com%2Fimages%2FLcdoap7xi.png&f=1" height="120" width="170"></p>
+      <br>
+    <h1 style="text-align: center; color: wheat"><b>Adicionar Veiculo</b></h1>
+      
+     <section>
+          <div class = "col-md-4 col-md-offset-4" align = center style="margin: 0 auto; background-color:rgba(255, 204, 229, 0.4)">
+                <form action="/Add_Veiculo" method="POST" style="text-align: center">
+                      
+                  
+                  <div>
+                      <br>
+                      <h5 style="color: wheat"><b>Marca:</b></h5>
+                      <input type="text" name="Marca" class="form-control" id="exampleFormControlInput1" placeholder="Introduza a Marca" style="opacity: 0.7">
+                  </div>
+ 
+          
+                  <div>
+                      <h5 style="color: wheat"><b>Matricula:</b></h5>
+                      <input type="text" name="Matricula" class="form-control" id="exampleFormControlInput1" placeholder="Introduza a Matricula" style="opacity: 0.7">
+                  </div>
+
+                  <div>
+                    <h5 style="color: wheat"><b>Condutor:</b></h5>
+                    <input type="text" name="Condutor" class="form-control" id="exampleFormControlInput1" placeholder="Introduza o Condutor" style="opacity: 0.7">
+                  </div>
+
+                    <div>
+                        <h5 style="color: wheat"><b>KM:</b></h5>
+                        <input type="number" name="KM" class="form-control" id="exampleFormControlInput1" placeholder="Introduza os KM's" style="opacity: 0.7">
+                    </div>
+
+                    <div>
+                        <h5 style="color: wheat"><b>Valor Faturado (€):</b></h5>
+                        <input type="number" name="Valor Faturado (€)" class="form-control" id="exampleFormControlInput1" placeholder="Introduza o Valor Faturado" style="opacity: 0.7">
+                    </div>
+
+                    <div>
+                        <h5 style="color: wheat"><b>Servicos:</b></h5>
+                        <input type="number" name="Servicos" class="form-control" id="exampleFormControlInput1" placeholder="Introduza o Nº de Servicos" style="opacity: 0.7">
+                    </div>
+
+                    <div>
+                        <h5 style="color: wheat"><b>Tipo:</b></h5>
+                        <input type="text" name="Tipo" class="form-control" id="exampleFormControlInput1" placeholder="Introduza o Tipo" style="opacity: 0.7">
+                    </div>
+                    
+                    <div class="row">
+                    <div class="col-md-6">
+                    <br>
+                        
+                    <button type="submit" name="BT_VEICULO" class="btn btn-primary btn-lg btn-block border-0 rounded-0" style="background-color: red" value="ADICIONAR">Adicionar</button>
+                    </div>
+                        
+                    <form action="/Add_Veiculo" method="POST">
+                        <div class="col-md-6">
+                        <br>
+                        <button type="submit" name="BT_VEICULO" class="btn btn-primary btn-lg btn-block border-0 rounded-0" style="background-color: red" value="CANCELAR">Cancelar</button>
+                        </div>
+                    </form>
+                    </div> 
+                </form>
+                <br>
+            </div>
+      </section>
+       
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+</html>

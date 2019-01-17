@@ -100,6 +100,34 @@ def Conta_Criada():
         if request.form['BT_SIGNUP'] == 'SIGNUP':
             return render_template('login.html')
 
-@app.route("/Admin")
+@app.route("/Admin", methods=['GET', 'POST'])
 def Admin():
-    return render_template('Admin.html')
+    if request.method == 'POST':
+        if request.form['BT_VEICULO'] == 'ADICIONAR':
+            return render_template('Add_Veiculo.html')
+
+@app.route("/Add_Veiculo", methods=['GET', 'POST'])
+def Add_Veiculo():
+    if request.method == 'POST':
+        if request.form['BT_VEICULO'] == 'ADICIONAR':
+            try:
+                file = open('Viatura.txt','r+')
+            except IOError:
+                file = open('Viatura.txt','w+')
+                
+            Viatura_DB = file.readlines()
+
+            for linha in Viatura_DB:
+
+                Palavras = linha.split("|")
+                
+                ultimo_ID = Palavras[0]
+
+
+            file = open('Viatura.txt','a')
+            file.write(str((int(ultimo_ID)+1))+'|'+request.form['Marca']+'|'+request.form['Matricula']+'|'+request.form['Condutor']+'|'+request.form['KM']+'|'+request.form['Valor Faturado (€)']+'|'+request.form['Servicos']+'|'+'Ativo'+'|'+request.form['Tipo']+'|'+'2.5'+'|'+'2.5'+'|'+'\n')
+            file.close()
+            return render_template('Admin.html')
+       
+        elif request.form['BT_VEICULO'] == 'CANCELAR':
+            return render_template('Admin.html')
