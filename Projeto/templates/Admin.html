@@ -33,6 +33,27 @@
       });
     })</script>
 
+      <script>
+        function Painel1(x)
+        {
+          if (x==0)//Mostra painel
+          document.getElementById('Painel_Viaturas').style.display='block';
+          else
+          document.getElementById('Painel_Viaturas').style.display='none';
+          return;
+        }
+      </script>
+
+      <script>
+       function Painel2(x)
+        {
+          if (x==0)
+          document.getElementById('Painel_Clientes').style.display='block';
+          else
+          document.getElementById('Painel_Clientes').style.display='none';
+          return;
+        }
+      </script>
     <title>Admin</title>
   </head>
   <body background="{{ url_for('static', filename='img1.jpg')}}" style="background-size: 100%; ">
@@ -43,9 +64,15 @@
             <div class = "row">
               <div class="col-md-12" style="background-color:rgba(32, 32, 32, 0.9)">
                 <h1 style="text-align: center; color: wheat"><b>Bem Vindo {{ Cliente_User }}</b></h1>
-                
-                
-                
+                <div class="col-md-4">
+                    <label style="color: wheat">Viaturas</lae> <input type="radio" name="rad1" onclick="Painel1(0); Painel2(1)" checked> 
+                </div>
+                <br><br>
+                <div class="col-md-4">
+                    <label style="color: wheat">Clientes</label> <input type="radio" name="rad1" onclick="Painel1(1); Painel2(0)" checked>
+                </div>
+                <br><br>
+                <section id="Painel_Viaturas">
                 
                 
                 <h3 style="color: wheat">Viaturas:</h3>
@@ -136,8 +163,90 @@
                   </table>
 
 
+                </section>
 
-
+                <section id="Painel_Clientes">
+                
+                
+                    <h3 style="color: wheat">Clientes:</h3>
+                    
+                    <br><br><br><br>
+                    <!-- Variavel_TESTE -->
+                    <table id="Tabela" class="table table-dark" style="color: wheat">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Marca</th>
+                            <th>Matricula</th>
+                            <th>Condutor</th>
+                            <th>KM</th>
+                            <th>Valor Faturado (€)</th>
+                            <th>Servicos</th>
+                            <th>Estado</th>
+                            <th>Tipo</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>Citroen</td>
+                            <td>12-XC-34</td>
+                            <td>Jeff</td>
+                            <td>45000</td>
+                            <td>10</td>
+                            <td>27</td>
+                            <td>Ativo</td>
+                            <td>carro</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Audi</td>
+                            <td>72-TY-57</td>
+                            <td>Wilson</td>
+                            <td>245000</td>
+                            <td>40</td>
+                            <td>33</td>
+                            <td>Ativo</td>
+                            <td>carrinha</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>Ferrari</td>
+                            <td>99-MNC-3</td>
+                            <td>Milson</td>
+                            <td>9000</td>
+                            <td>150</td>
+                            <td>14</td>
+                            <td>Ativo</td>
+                            <td>carro</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>lamborghini</td>
+                            <td>75-IAP-80</td>
+                            <td>Flinsc</td>
+                            <td>316851</td>
+                            <td>155</td>
+                            <td>15</td>
+                            <td>Ativo</td>
+                            <td>carro</td>
+                          </tr>
+                          <tr>
+                            <td>5</td>
+                            <td>Alfa Romeo</td>
+                            <td>45-PP-19</td>
+                            <td>Jason</td>
+                            <td>6431</td>
+                            <td>70</td>
+                            <td>17</td>
+                            <td>Ativo</td>
+                            <td>carro</td>
+                          </tr>
+                        </tbody>
+                      </table>
+    
+    
+                    </section>
                 
               </div>
             </div>
