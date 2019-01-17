@@ -3,15 +3,41 @@ import re
 from Projeto import app
 from flask import Flask, render_template, request, Markup, flash
 lg_done = False
-try:
-    file = open('Login.txt','r+')
-except IOError:
-    file = open('Login.txt','w+')
+def load_login():
+    try:
+        file = open('Login.txt','r+')
+    except IOError:
+        file = open('Login.txt','w+')
+    Login_DB = file.readlines()
+    file.close()
+    return Login_DB
 
-Login_DB = file.readlines()
+def load_veiculos():
+    try:
+        file = open('Viatura.txt','r+')
+    except IOError:
+        file = open('Viatura.txt','w+')
+                
+    Viatura_DB = file.readlines()
+    file.close()
+    cont = 0
+    script = ''
+    for linha in Viatura_DB:
+        Palavras = linha.split("|")
+        if cont == 0:
+            script = script + '<tr>'
+        while cont <= 8:
+            script = script +'<td>'+Palavras[cont]+'</td>'
+            if cont == 8:
+                script = script +'</tr>'
+            cont += 1
+        else:
+            cont = 0
+    return script
 
-file.close()
-
+def load_tabela():
+    message = Markup(load_veiculos())
+    flash(message)
 
 @app.route("/")
 @app.route("/home")
@@ -37,32 +63,33 @@ def login():
         if request.form['BT_LOG'] == 'LOGIN':
             if request.form['Cliente_User'] == "Admin":
                 if request.form['Cliente_Pass'] == "Admin":
+                    load_tabela()
                     return render_template("Admin.html", Cliente_User=request.form['Cliente_Pass'])
             
             else:
-                for linha in Login_DB:
+                for linha in load_login():
                 
                     Palavras = linha.split("|")
-                    cont = 0
-                    #Se Palavras[0] (Username), corresponder a algum User da base de dados, então...
+                    cont = 1
+                    #Se Palavras[1] (Username), corresponder a algum User da base de dados, então...
                     if Palavras[cont] == request.form['Cliente_User']:
                         #Contador +1
                         cont += 1
-                        #Se Palavras[1], corresponder a alguma Pass da base de dados, então...
+                        #Se Palavras[2], corresponder a alguma Pass da base de dados, então...
                         if Palavras[cont] == request.form['Cliente_Pass']:
                             #Faz isto
                             #global lg_done = True
                             return render_template("index.html", Cliente_Pass='Funcionou', Cliente_User='Great Job!')
-                        #Se Palavras[0](User), for encontrado mas Palavras[1](Pass) não for encontrado na Base de Dados, então...
+                        #Se Palavras[1](User), for encontrado mas Palavras[2](Pass) não for encontrado na Base de Dados, então...
                         else:
                             #Faz isto:
                             return render_template("login.html", Pass_Errada='A Password Introduzida está incorreta!')
-                for linha in Login_DB:
+                for linha in load_login():
                     Palavras = linha.split("|")
-                    cont = 0
-                    #Se Palavras[0] (Username), não for encontrado na Base de Dados, então...
+                    cont = 1
+                    #Se Palavras[1] (Username), não for encontrado na Base de Dados, então...
                     cont += 1
-                    #Se Palavras[1] for encontrado:
+                    #Se Palavras[2] for encontrado:
                     if Palavras[cont] == request.form['Cliente_Pass']:
                        return render_template("login.html", User_Errado='O seu Username não está correto!')
                     else:
@@ -77,19 +104,23 @@ def login():
 def signup():
     if request.method == 'POST':
         if request.form['BT_SIGNUP'] == 'SIGNUP':
-            for linha in Login_DB:
+            for linha in load_login():
 
                 Palavras = linha.split("|")
-                #Se Palavras[0] (Username), corresponder a algum User da base de dados, então...
-                if Palavras[0] == request.form['Cliente_User']:
+                #Se Palavras[1] (Username), corresponder a algum User da base de dados, então...
+                if Palavras[1] == request.form['Cliente_User']:
                     return render_template("signup.html", User_Existe='O Username introduzido já existe')
 
             if request.form['Cliente_Pass1'] != request.form['Cliente_Pass2']:
                 return render_template("signup.html", Pass_Erro='As Password não correspondem')
     
             if re.match(r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$])[\w\d@#$]{6,12}$', request.form['Cliente_Pass1']):
+                for linha in load_login():
+                    Palavras = linha.split("|")
+                    ultimo_ID = Palavras[0]
+
                 file = open('Login.txt','a')
-                file.write(request.form['Cliente_User']+'|'+request.form['Cliente_Pass1']+'|'+'\n')
+                file.write(str((int(ultimo_ID)+1))+'|'+request.form['Cliente_User']+'|'+request.form['Cliente_Pass1']+'|'+'\n')
                 file.close()
                 return render_template("Conta_Criada.html")
             else:
@@ -110,8 +141,6 @@ def Admin():
     
 
     if request.method == 'POST':
-        message = Markup("<h1>Voila! Platform is ready to used</h1>")
-        flash(message)
         if request.form['BT_VEICULO'] == 'ADICIONAR':
             return render_template('Add_Veiculo.html')
         
@@ -140,15 +169,18 @@ def Add_Veiculo():
             file = open('Viatura.txt','a')
             file.write(str((int(ultimo_ID)+1))+'|'+request.form['Marca']+'|'+request.form['Matricula']+'|'+request.form['Condutor']+'|'+request.form['KM']+'|'+request.form['Valor Faturado (€)']+'|'+request.form['Servicos']+'|'+'Ativo'+'|'+request.form['Tipo']+'|'+'2.5'+'|'+'2.5'+'|'+'\n')
             file.close()
+            load_tabela()
             return render_template('Admin.html')
        
         elif request.form['BT_VEICULO'] == 'CANCELAR':
+            load_tabela()
             return render_template('Admin.html')
 
 @app.route("/Del_Veiculo", methods=['GET', 'POST'])
 def Del_Veiculo():
     if request.method == 'POST':
         if request.form['BT_VEICULO'] == 'CANCELAR':
+            load_tabela()
             return render_template('Admin.html')
         elif request.form['BT_VEICULO'] == 'REMOVER':
 
@@ -173,4 +205,5 @@ def Del_Veiculo():
             for linha in Viatura_DB:
                 file.write(str(linha))
             file.close()
+            load_tabela()
             return render_template('Admin.html')
