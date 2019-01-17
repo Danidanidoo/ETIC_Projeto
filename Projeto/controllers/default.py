@@ -37,7 +37,7 @@ def login():
         if request.form['BT_LOG'] == 'LOGIN':
             if request.form['Cliente_User'] == "Admin":
                 if request.form['Cliente_Pass'] == "Admin":
-                    return render_template("Admin.html", Cliente_Pass=request.form['Cliente_User'], Cliente_User=request.form['Cliente_Pass'])
+                    return render_template("Admin.html", Cliente_User=request.form['Cliente_Pass'])
             
             else:
                 for linha in Login_DB:
@@ -99,3 +99,7 @@ def Conta_Criada():
     if request.method == 'POST':
         if request.form['BT_SIGNUP'] == 'SIGNUP':
             return render_template('login.html')
+
+@app.route("/Admin")
+def Admin():
+    return render_template('Admin.html')
