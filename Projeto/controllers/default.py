@@ -100,11 +100,18 @@ def Conta_Criada():
         if request.form['BT_SIGNUP'] == 'SIGNUP':
             return render_template('login.html')
 
+
+
+
 @app.route("/Admin", methods=['GET', 'POST'])
 def Admin():
     if request.method == 'POST':
         if request.form['BT_VEICULO'] == 'ADICIONAR':
             return render_template('Add_Veiculo.html')
+        
+        elif request.form['BT_VEICULO'] == 'REMOVER':
+            return render_template('Del_Veiculo.html')
+
 
 @app.route("/Add_Veiculo", methods=['GET', 'POST'])
 def Add_Veiculo():
@@ -130,4 +137,34 @@ def Add_Veiculo():
             return render_template('Admin.html')
        
         elif request.form['BT_VEICULO'] == 'CANCELAR':
+            return render_template('Admin.html')
+
+@app.route("/Del_Veiculo", methods=['GET', 'POST'])
+def Del_Veiculo():
+    if request.method == 'POST':
+        if request.form['BT_VEICULO'] == 'CANCELAR':
+            return render_template('Admin.html')
+        elif request.form['BT_VEICULO'] == 'REMOVER':
+
+            try:
+                file = open('Viatura.txt','r+')
+            except IOError:
+                file = open('Viatura.txt','w+')
+                
+            Viatura_DB = file.readlines()
+            file.close()
+            for linha in Viatura_DB:
+
+                Palavras = linha.split("|")
+                if Palavras[0] == request.form['ID']:
+                    Palavras.pop(7)
+                    Palavras.insert(7,"Inativo")
+                    nova_linha = '|'.join(Palavras)
+            Viatura_DB.pop(int(request.form['ID'])-1)
+            Viatura_DB.insert(int(request.form['ID'])-1, nova_linha)
+
+            file = open('Viatura.txt','w')
+            for linha in Viatura_DB:
+                file.write(str(linha))
+            file.close()
             return render_template('Admin.html')

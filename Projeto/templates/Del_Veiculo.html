@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-pt">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="icon" href="https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fclipart-library.com%2Fimages%2FLcdoap7xi.png&f=1">
+    <!-- Bootstrap CSS -->
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <title>Admin</title>
+  </head>
+  <body background="{{ url_for('static', filename='img1.jpg')}}" style="background-size: 100%; ">
+      <br>
+      <br>
+      <section>
+        <div class = "container">
+            <div class = "row">
+              <div class="col-md-12" style="background-color:rgba(32, 32, 32, 0.9)">
+                <h1 style="text-align: center; color: wheat"><b>Bem Vindo {{ Cliente_User }}</b></h1>
+                
+
+                <h3 style="color: wheat">Viaturas:</h3>
+                <form action="/Del_Veiculo" method="POST">
+                    <div>
+                        <h5 style="color: wheat"><b>ID do Veiculo:</b></h5>
+                        <input type="number" name="ID" class="form-control" id="exampleFormControlInput1" placeholder="Introduza o Nº de ID do Veiculo que pretende apagar" style="opacity: 0.7">
+                    </div>
+
+                  <div class="col-md-6">
+                  <br>
+                  <button type="submit" name="BT_VEICULO" class="btn btn-primary btn-lg btn-block border-0 rounded-0" style="background-color: red" value="REMOVER">Remover Veiculo</button>
+                  </div>
+
+                  <div class="col-md-6">
+                    <br>
+                    <button type="submit" name="BT_VEICULO" class="btn btn-primary btn-lg btn-block border-0 rounded-0" style="background-color: red" value="CANCELAR">Cancelar</button>
+                    </div>
+                </form>
+                <br><br><br><br>
+               
+              </div>
+            </div>
+          </div>
+        </section>
+    
+  </body>
+</html>
