@@ -2,7 +2,19 @@
 import re
 from Projeto import app
 from flask import Flask, render_template, request, Markup, flash
+import math
 lg_done = False
+
+
+def calc_distancia(X1, Y1, X2, Y2):
+    rad=math.pi/180
+    dX=X2-X1
+    dY=Y2-Y1
+    R=6372.795477598
+    a=(math.sin(rad*dX/2))**2 + math.cos(rad*X1)*math.cos(rad*X2)*(math.sin(rad*dY/2))**2
+    distancia=2*R*math.asin(math.sqrt(a))
+    return distancia
+
 def load_login():
     try:
         file = open('Login.txt','r+')
@@ -116,7 +128,7 @@ def login():
                         if Palavras[cont] == request.form['Cliente_Pass']:
                             #Faz isto
                             #global lg_done = True
-                            return render_template("index.html", Cliente_Pass='Funcionou', Cliente_User='Great Job!')
+                            return render_template("Cliente.html", Cliente_Pass='Funcionou', Cliente_User='Great Job!')
                         #Se Palavras[2](User), for encontrado mas Palavras[3](Pass) não for encontrado na Base de Dados, então...
                         else:
                             #Faz isto:
@@ -256,3 +268,57 @@ def Del_Veiculo():
             load_tabela()
             load_tabela_cliente()
             return render_template('Admin.html')
+
+@app.route("/Cliente", methods=['GET', 'POST'])
+def Cliente():
+    
+    try:
+        file = open('Viatura.txt','r+')
+    except IOError:
+        file = open('Viatura.txt','w+')
+                
+    Viatura_DB = file.readlines()
+    file.close()
+    cont = 0
+    nova_linha = Viatura_DB
+    if request.method == 'POST':
+        if request.form['BT_CLIENTE'] == 'PESQUISA':
+            Distancia_a = 1.1
+            Distancia_ab = calc_distancia(float(request.form['Cliente_X']), float(request.form['Cliente_Y']), float(request.form['Destino_X']), float(request.form['Destino_Y']))
+            for linha in Viatura_DB:
+                Palavras = linha.split("|")
+                if Palavras[9] == 'carro':
+                    custo = 3 + (Distancia_ab * 0.40)
+                    tempo_ab = Distancia_ab / 30
+                    tempo_a = Distancia_a / 30
+                    Veiculo_X = Palavras[10]
+                    Veiculo_Y = Palavras[11]
+                    Distancia_a = calc_distancia(float(request.form['Cliente_X']), float(request.form['Cliente_Y']), float(Veiculo_X), float(Veiculo_Y))
+                else:
+                    custo = 4 + (Distancia_ab * 0.70)
+                    tempo_ab = Distancia_ab / 25
+                    tempo_a = Distancia_a / 25
+                    Distancia_a = calc_distancia(float(request.form['Cliente_X']), float(request.form['Cliente_Y']), float(Veiculo_X), float(Veiculo_Y))
+                nova_linha[cont] ='|'+ Palavras[2] + '|' + Palavras[4] + '|' + str(int(Distancia_a)) + '|'+str(int(custo))+'|'+str(int(tempo_ab))+'|'+str(int(tempo_a))+'|'+Palavras[9]+'|'+'\n'
+                cont += 1
+            
+            script = ''
+            
+            
+            cont = 1
+            for linha in nova_linha:
+                Palavras = linha.split("|")
+                if cont == 1:
+                    script = script + '<tr>'
+                while cont <= 7:
+                    script = script +'<td>'+Palavras[cont]+'</td>'
+                    if cont == 7:
+                        script = script +'</tr>'
+                    cont += 1
+                else:
+                    cont = 1
+                        
+            
+            message = Markup(script)
+            flash(message, category='veiculo_cliente')
+            return render_template('Cliente.html')

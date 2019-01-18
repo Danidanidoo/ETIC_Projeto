@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-pt">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="icon" href="https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fclipart-library.com%2Fimages%2FLcdoap7xi.png&f=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.12/sorting/date-eu.js"></script>
+        
+        <script>$(function () {
+      $("#Tabela").DataTable({
+        "columns": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      });
+    })</script>
+
+    <title>Cliente</title>
+  </head>
+  <body background="{{ url_for('static', filename='img1.jpg')}}" style="background-size: 100%; ">
+      
+      <br>
+      <br>
+    <section>
+        <div class = "container">
+            <div class = "row">
+              <div class="col-md-12" style="background-color:rgba(32, 32, 32, 0.9)">
+                <h1 style="text-align: center; color: wheat"><b>Bem Vindo {{ Cliente_User }}</b></h1>
+                <br>
+                <form action="/Cliente" method="POST">
+                      
+                  <div class="row">
+                    <div class="col-md-5" align = center style="margin: 0 auto; text-align: center">
+                        
+                        <h5 style="color: wheat"><b>Seu Endereço X:</b></h5>
+                        <input type="number" name="Cliente_X" class="form-control" id="exampleFormControlInput1" style="opacity: 0.7">
+                        <label style="color: red" > {{ User_Errado }} </label>
+                    </div>
+   
+            
+                    <div class="col-md-5" align = center style="margin: 0 auto; text-align: center">
+                            <h5 style="color: wheat"><b>Onde pretende ir X:</b></h5>
+                            <input type="number" name="Destino_X" class="form-control" id="exampleFormControlInput1" style="opacity: 0.7">
+                            <label style="color: red" > {{ User_Errado }} </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5" align = center style="margin: 0 auto; text-align: center">
+                            <h5 style="color: wheat"><b>Seu Endereço Y:</b></h5>
+                        <input type="number" name="Cliente_Y" class="form-control" id="exampleFormControlInput1" style="opacity: 0.7">
+                        <label style="color: red"> {{ Pass_Errada }} </label>
+                            
+                        </div>
+       
+                
+                        <div class="col-md-5" align = center style="margin: 0 auto; text-align: center">
+                            <h5 style="color: wheat"><b>Onde pretende ir Y:</b></h5>
+                            <input type="number" name="Destino_Y" class="form-control" id="exampleFormControlInput1" style="opacity: 0.7">
+                            <label style="color: red"> {{ Pass_Errada }} </label>
+                        </div>
+                    </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                     <br>
+                        
+                     <button type="submit" name="BT_CLIENTE" class="btn btn-primary btn-lg btn-block border-0 rounded-0" style="background-color: red" value="PESQUISA">Pesquisar</button>
+                    </div>
+                        
+                    <form action="/login" method="POST">
+                      <div class="col-md-6">
+                        <br>
+                        <button type="submit" name="BT_CLIENTE" class="btn btn-primary btn-lg btn-block border-0 rounded-0" style="background-color: red" value="SIGNUP">Sign Up</button>
+                      </div>
+                    </form>
+                  </div> 
+                  </form>
+                    <br>
+                    <table id="Tabela" class="table table-dark col-md-12" style="color: wheat">
+                            <thead>
+                              <tr>
+                                <th>Marca</th>
+                                <th>Condutor</th>
+                                <th>Distancia</th>
+                                <th>Custo</th>
+                                <th>Duração</th>
+                                <th>Espera</th>
+                                <th>Tipo</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {% with veiculos = get_flashed_messages(category_filter=["veiculo_cliente"]) %}
+                                {% if veiculos %}
+                                  {% for message in veiculos %}
+                                    {{ message }}
+                                  {% endfor %}
+                                {% endif %}
+                              {% endwith %}
+                            </tbody>
+                          </table>
+
+                <br>
+              </div>
+            </div>
+          </div>
+    </section>
+    
+  </body>
+</html>
