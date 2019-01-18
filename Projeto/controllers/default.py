@@ -35,9 +35,36 @@ def load_veiculos():
             cont = 1
     return script
 
+def load_cliente():
+    try:
+        file = open('Cliente.txt','r+')
+    except IOError:
+        file = open('Cliente.txt','w+')
+                
+    Cliente_DB = file.readlines()
+    file.close()
+    cont = 1
+    script = ''
+    for linha in Cliente_DB:
+        Palavras = linha.split("|")
+        if cont == 1:
+            script = script + '<tr>'
+        while cont <= 2:
+            script = script +'<td>'+Palavras[cont]+'</td>'
+            if cont == 2:
+                script = script +'</tr>'
+            cont += 1
+        else:
+            cont = 1
+    return script
+
 def load_tabela():
     message = Markup(load_veiculos())
-    flash(message)
+    flash(message, category='veiculo')
+
+def load_tabela_cliente():
+    message = Markup(load_cliente())
+    flash(message, category='cliente')
 
 @app.route("/")
 @app.route("/home")
@@ -64,6 +91,7 @@ def login():
             if request.form['Cliente_User'] == "Admin":
                 if request.form['Cliente_Pass'] == "Admin":
                     load_tabela()
+                    load_tabela_cliente()
                     return render_template("Admin.html", Cliente_User=request.form['Cliente_Pass'])
             
             else:
@@ -170,10 +198,12 @@ def Add_Veiculo():
             file.write('|'+str((int(ultimo_ID)+1))+'|'+request.form['Marca']+'|'+request.form['Matricula']+'|'+request.form['Condutor']+'|'+request.form['KM']+'|'+request.form['Valor Faturado (€)']+'|'+request.form['Servicos']+'|'+'Ativo'+'|'+request.form['Tipo']+'|'+'2.5'+'|'+'2.5'+'|'+'\n')
             file.close()
             load_tabela()
+            load_tabela_cliente()
             return render_template('Admin.html')
        
         elif request.form['BT_VEICULO'] == 'CANCELAR':
             load_tabela()
+            load_tabela_cliente()
             return render_template('Admin.html')
 
 @app.route("/Del_Veiculo", methods=['GET', 'POST'])
@@ -181,6 +211,7 @@ def Del_Veiculo():
     if request.method == 'POST':
         if request.form['BT_VEICULO'] == 'CANCELAR':
             load_tabela()
+            load_tabela_cliente()
             return render_template('Admin.html')
         elif request.form['BT_VEICULO'] == 'REMOVER':
 
@@ -206,4 +237,5 @@ def Del_Veiculo():
                 file.write(str(linha))
             file.close()
             load_tabela()
+            load_tabela_cliente()
             return render_template('Admin.html')

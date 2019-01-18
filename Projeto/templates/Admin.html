@@ -37,13 +37,6 @@
     $("#Tabela2").DataTable({
       "columns": [
         null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
         null
       ]
     });
@@ -121,9 +114,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                          {% for message in messages %}
+                        {% with veiculos = get_flashed_messages(category_filter=["veiculo"]) %}
+                        {% if veiculos %}
+                          {% for message in veiculos %}
                             {{ message }}
                           {% endfor %}
                         {% endif %}
@@ -145,18 +138,11 @@
                         <thead>
                           <tr>
                             <th>ID</th>
-                            <th>Marca</th>
-                            <th>Matricula</th>
-                            <th>Condutor</th>
-                            <th>KM</th>
-                            <th>Valor Faturado (€)</th>
-                            <th>Servicos</th>
-                            <th>Estado</th>
-                            <th>Tipo</th>
+                            <th>Nome</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {% with messages = get_flashed_messages() %}
+                          {% with messages = get_flashed_messages(category_filter=["cliente"]) %}
                             {% if messages %}
                               {% for message in messages %}
                                 {{ message }}
