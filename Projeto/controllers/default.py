@@ -1,5 +1,6 @@
 #Linha de codigo dedicada a realizar a ligação entre os comandos do script "default.py" e a variavel "app" do script "__init__.py" da pasta principal "Projeto"
 import re
+import random
 from Projeto import app
 from flask import Flask, render_template, request, Markup, flash
 import math
