@@ -20,19 +20,19 @@ def load_veiculos():
                 
     Viatura_DB = file.readlines()
     file.close()
-    cont = 0
+    cont = 1
     script = ''
     for linha in Viatura_DB:
         Palavras = linha.split("|")
-        if cont == 0:
+        if cont == 1:
             script = script + '<tr>'
-        while cont <= 8:
+        while cont <= 9:
             script = script +'<td>'+Palavras[cont]+'</td>'
-            if cont == 8:
+            if cont == 9:
                 script = script +'</tr>'
             cont += 1
         else:
-            cont = 0
+            cont = 1
     return script
 
 def load_tabela():
@@ -70,26 +70,26 @@ def login():
                 for linha in load_login():
                 
                     Palavras = linha.split("|")
-                    cont = 1
-                    #Se Palavras[1] (Username), corresponder a algum User da base de dados, então...
+                    cont = 2
+                    #Se Palavras[2] (Username), corresponder a algum User da base de dados, então...
                     if Palavras[cont] == request.form['Cliente_User']:
                         #Contador +1
                         cont += 1
-                        #Se Palavras[2], corresponder a alguma Pass da base de dados, então...
+                        #Se Palavras[3], corresponder a alguma Pass da base de dados, então...
                         if Palavras[cont] == request.form['Cliente_Pass']:
                             #Faz isto
                             #global lg_done = True
                             return render_template("index.html", Cliente_Pass='Funcionou', Cliente_User='Great Job!')
-                        #Se Palavras[1](User), for encontrado mas Palavras[2](Pass) não for encontrado na Base de Dados, então...
+                        #Se Palavras[2](User), for encontrado mas Palavras[3](Pass) não for encontrado na Base de Dados, então...
                         else:
                             #Faz isto:
                             return render_template("login.html", Pass_Errada='A Password Introduzida está incorreta!')
                 for linha in load_login():
                     Palavras = linha.split("|")
-                    cont = 1
-                    #Se Palavras[1] (Username), não for encontrado na Base de Dados, então...
+                    cont = 2
+                    #Se Palavras[2] (Username), não for encontrado na Base de Dados, então...
                     cont += 1
-                    #Se Palavras[2] for encontrado:
+                    #Se Palavras[3] for encontrado:
                     if Palavras[cont] == request.form['Cliente_Pass']:
                        return render_template("login.html", User_Errado='O seu Username não está correto!')
                     else:
@@ -107,8 +107,8 @@ def signup():
             for linha in load_login():
 
                 Palavras = linha.split("|")
-                #Se Palavras[1] (Username), corresponder a algum User da base de dados, então...
-                if Palavras[1] == request.form['Cliente_User']:
+                #Se Palavras[2] (Username), corresponder a algum User da base de dados, então...
+                if Palavras[2] == request.form['Cliente_User']:
                     return render_template("signup.html", User_Existe='O Username introduzido já existe')
 
             if request.form['Cliente_Pass1'] != request.form['Cliente_Pass2']:
@@ -117,7 +117,7 @@ def signup():
             if re.match(r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$])[\w\d@#$]{6,12}$', request.form['Cliente_Pass1']):
                 for linha in load_login():
                     Palavras = linha.split("|")
-                    ultimo_ID = Palavras[0]
+                    ultimo_ID = Palavras[1]
 
                 file = open('Login.txt','a')
                 file.write(str((int(ultimo_ID)+1))+'|'+request.form['Cliente_User']+'|'+request.form['Cliente_Pass1']+'|'+'\n')
@@ -163,11 +163,11 @@ def Add_Veiculo():
 
                 Palavras = linha.split("|")
                 
-                ultimo_ID = Palavras[0]
+                ultimo_ID = Palavras[1]
 
 
             file = open('Viatura.txt','a')
-            file.write(str((int(ultimo_ID)+1))+'|'+request.form['Marca']+'|'+request.form['Matricula']+'|'+request.form['Condutor']+'|'+request.form['KM']+'|'+request.form['Valor Faturado (€)']+'|'+request.form['Servicos']+'|'+'Ativo'+'|'+request.form['Tipo']+'|'+'2.5'+'|'+'2.5'+'|'+'\n')
+            file.write('|'+str((int(ultimo_ID)+1))+'|'+request.form['Marca']+'|'+request.form['Matricula']+'|'+request.form['Condutor']+'|'+request.form['KM']+'|'+request.form['Valor Faturado (€)']+'|'+request.form['Servicos']+'|'+'Ativo'+'|'+request.form['Tipo']+'|'+'2.5'+'|'+'2.5'+'|'+'\n')
             file.close()
             load_tabela()
             return render_template('Admin.html')
@@ -194,9 +194,9 @@ def Del_Veiculo():
             for linha in Viatura_DB:
 
                 Palavras = linha.split("|")
-                if Palavras[0] == request.form['ID']:
-                    Palavras.pop(7)
-                    Palavras.insert(7,"Inativo")
+                if Palavras[1] == request.form['ID']:
+                    Palavras.pop(8)
+                    Palavras.insert(8,"Inativo")
                     nova_linha = '|'.join(Palavras)
             Viatura_DB.pop(int(request.form['ID'])-1)
             Viatura_DB.insert(int(request.form['ID'])-1, nova_linha)
