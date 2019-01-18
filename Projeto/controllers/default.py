@@ -12,6 +12,15 @@ def load_login():
     file.close()
     return Login_DB
 
+def load_cliente_DB():
+    try:
+        file = open('Cliente.txt','r+')
+    except IOError:
+        file = open('Cliente.txt','w+')
+    Cliente_DB = file.readlines()
+    file.close()
+    return Cliente_DB
+
 def load_veiculos():
     try:
         file = open('Viatura.txt','r+')
@@ -148,7 +157,15 @@ def signup():
                     ultimo_ID = Palavras[1]
 
                 file = open('Login.txt','a')
-                file.write(str((int(ultimo_ID)+1))+'|'+request.form['Cliente_User']+'|'+request.form['Cliente_Pass1']+'|'+'\n')
+                file.write('|'+str((int(ultimo_ID)+1))+'|'+request.form['Cliente_User']+'|'+request.form['Cliente_Pass1']+'|'+'\n')
+                file.close()
+
+                for linha in load_cliente_DB():
+                    Palavras = linha.split("|")
+                    ultimo_ID = Palavras[1]
+
+                file = open('Cliente.txt','a')
+                file.write('|'+str((int(ultimo_ID)+1))+'|'+request.form['Cliente_Nome']+'|'+'\n')
                 file.close()
                 return render_template("Conta_Criada.html")
             else:
